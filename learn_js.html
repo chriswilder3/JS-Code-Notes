@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        This is a sample Application
+    </h1>
+    <div class="container">
+        
+    </div>
+    <button onclick="printf()" id="mybtn"> Click</button>
+
+    <script>
+        var div = document.querySelector('.container');
+        var name = "sachin";
+
+        div.innerHTML = name;
+        document.write('sachin')
+
+        window.alert(' Welcome to CodeRunner Site')
+        console.log(23)
+
+        btn = document.querySelector("#mybtn")
+        function printf(){
+            window.print();
+        }
+        console.log(`${name} is my name`); // this is better than concatenate(+)
+        
+        let $book = 'fifty' // This is valid since $ is also allowed 
+                            // just like _ in other languages.
+        
+         /* This is multiline comment */
+
+        // JavaScript const variables must be assigned a value when
+        //  they are declared:
+         const pi = 3.14;
+         /* const f;
+             f = 10;      This is not allowed */
+         console.log(pi);
+
+        // The keyword does not define a constant value. 
+        // It defines a constant reference to a value.
+
+        // Because of this you can NOT:
+        // Reassign a constant value
+        // Reassign a constant array
+        // Reassign a constant object
+
+        // But you CAN:
+        // Change the elements of constant array
+        // Change the properties of constant object
+
+        const animals = ['tiger', 'lion', 'swan']
+
+        animals[1] = 'rhino' //such operation allowed
+        animals.push('cheetah')
+        console.log(animals);
+
+        // But reassignment of array itself not allowed 
+        // animals = ['sachin', 'liger'] gives error
+
+        let sname = new String('cassandra')
+        console.log(sname);
+        console.table([
+                        sname.at(2),sname.toLocaleUpperCase(),sname.concat('-2.5')
+                        , sname.indexOf('san'), sname.substring(4,7)
+                        , sname.replace('san','tontonton') 
+                    ])
+        let a = 5 + 3 + 7; // Simple addition as expected
+        console.log(a);
+
+        let b = "4" +2 +6 // Here Numbers are converted to string before concatenation
+        console.log(b); console.log(typeof(b));
+
+        // Variables declared with let have Block Scope, 
+        // So they cant be accessed out of that block
+        //let x =10
+        
+        {
+            let x = 20
+            //console.log(x);
+            var y = 13
+        }
+        
+        //console.log(x); // This gives error
+        console.log(y);  // This doesnt
+
+        // 8 Datatypes in Js : 
+        // String, Number, Boolean, BigInt,Undefined ,null ,Symbol, Object
+        // Objects can be of many types : arrays, maps, dates, sets, objects
+
+        // JS evalutes  L-R direction, Hence some confusing results come
+
+        let res = 16 + 4 + "Volvo";
+        console.log(res); // gives 20Volvo since 16+4 is evlauted first
+
+        let res2 = "Volvo" + 16 + 4;
+        console.log(res2); //gives Volvo164 since concat needs to done first 
+
+        // JS is dynamically typed :
+        let x;       // Now x is undefined
+        x = 5;       // Now x is a Number
+        x = "John";  // Now x is a String
+        
+        // Note : Objects are usually 'const' unless necessary to declare 'let'
+
+        // 3 ways of declaring objects : 
+        // => Using an Object Literal
+            const car = {name:'toyota',model:234,size:[10,20,5]}
+            console.log(car);
+        // => Using the new Keyword, Object() constructor
+            const truck = new Object(); // same as const truck = {}
+            truck.name ='tarzan';
+            truck.wheels = 8;
+            console.log(truck);
+
+        // Objects can also have methods 
+        // Note : objects properties can be accessed with 'this' keyword
+        const person= {
+            fName : 'sachin',
+            lName : 'sd',
+            fullName : function(){
+                return `${this.fName}  ${this.lName}`
+            }
+        }
+        // In Js, Primitive values are immutable
+        // Objects are mutable: They are addressed by reference, not by value.
+        
+        const p2 = person; // Note that p2 is name for 'person' object itself,
+                        //  not a copy of it. So changing one changes the other
+        
+        // We can delete properties of Objects
+        delete p2.lName;
+        // console.log(p2);
+        
+        // How to add new properties/methods to Objects?
+        p2.fName = 'ron'
+        p2.reversename = function(){
+            return this.lName + this.fName;
+        }
+        
+    </script>
+</body>
+</html>
