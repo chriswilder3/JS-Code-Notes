@@ -143,6 +143,36 @@
         p2.reversename = function(){
             return this.lName + this.fName;
         }
+
+        // Looping through Object properties
+        for(let property in p2){
+            // console.log(property, p2[property]);
+        }
+        //You must use person[x] in the loop. person.x will not work (Because x is the loop variable).
+        
+        // Object.values(obj_name) creates an array of values. NOTE : Its a METHOD
+
+        //console.log(Object.values(p2));
+
+        // Object.entries(obj_name) gives key,val pairs similar to 
+                             // how index,value is given by enumerate in python
+        
+        for(let [keys,values] of Object.entries(p2)){
+           // console.log(keys+ " " + values);
+        }
+
+        // Note that for-in loop is for iterating with keys as loop variables, 
+        
+        // but for-of loop can work only with iterables.
+        // for(i of p2) wont work because p2 is not iterable like array
+        
+        // but for(i,j of Object.entries())/ for(i of Object.values()) WORK
+        // because they are iterables.
+         
+        for(j in p2){
+            console.log(j); 
+        }
+
         
     </script>
 </body>
