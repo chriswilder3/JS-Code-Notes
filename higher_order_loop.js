@@ -85,12 +85,19 @@
     // score  ->  64
     // wt  ->  74
 
-    // With Arrays, For in loop gives indices only
-    score =[ 12,32,43,55]
-    for (const elem in score) {
-        console.log(elem);
+    // With Arrays, For in loop variable gives indices only.
+    // Why ? Because arrays are object types too and index themselves
+    // act as keys here
+    // Hence we can acess array like this
+    const score =[ 12,32,43,55]
+    for (const index in score) {
+        console.log(index, score[index]);
     }
-    // 0
-    // 1
-    // 2
-    // 3
+    // 0 12
+    // 1 32
+    // 2 43
+    // 3 55
+
+    // Can we apply For in for Maps too?
+
+    
