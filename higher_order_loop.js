@@ -100,4 +100,83 @@
 
     // Can we apply For in for Maps too?
 
+    const car = new Map()
+    car.set('model' , 'toyota')
+    car.set('series' , '22')
+
+    for (const key in car) {
+        console.log(key);
+    } // O/p : 
+    // So nothing was printed. 
+    // Hence is not iterable thorugh For in loop
+
+// For each loop
+    // For Each loop is a HIGHER ORDER LOOP
+    // Note that foreach loop are inherent property of array objects
+    // We can verify this through browser console
     
+    const langs = ["c", "Python", "JS"]
+
+    // Syntax : forech(callback_function)
+    // Note that callback function is executed on each element of the array
+    // hence the param to callback function we write is treated
+    // as items of array
+
+    langs.forEach( function (item){
+        item = item + " Lang."
+        console.log(item);
+    } )
+    // c Lang.
+    // Python Lang.
+    // JS Lang.
+
+    // We can also apply arrow function to foreach loop
+
+    langs.forEach(  (item) => {
+        console.log(item.toLowerCase());
+    })
+    // c
+    // python
+    // js
+
+    // We dont have to necessarily pass whole definition callback into foreach
+    // We can define it elsewhere, pass its name to foreach
+
+    function capsMaker(item){
+        console.log(item.toUpperCase());
+    }
+    langs.forEach(capsMaker);
+    // C
+    // PYTHON
+    // JS
+
+    // In reality foreach has acess to more than just the items of array
+    // Callback of Foreach can have 3 type of arguments
+    // Items, Index, Array(entire)
+
+    langs.forEach( (item, ind, arr) => {
+        console.log(item, ind , arr);
+    })
+    // c 0 [ 'c', 'Python', 'JS' ]
+    // Python 1 [ 'c', 'Python', 'JS' ]
+    // JS 2 [ 'c', 'Python', 'JS' ]
+
+// For each is very userfull for acessig array of objects
+    const allCars = [ 
+                        {model : 'bmw', power : 900, year : 97},
+                        {model : 'alto', power : 700, year : 93},
+                        {model : 'ford', power : 300, year : 95},
+                    ]
+    // Here each item in the callback is treated as individual object 
+    allCars.forEach( ( car ) => {
+        car['year'] += 1
+        car['power'] += 100
+        car['model'] = car['model'].toUpperCase()
+        console.log(car['model'], car['power'], car['year']);
+    })
+    // BMW 1000 98
+    // ALTO 800 94
+    // FORD 400 96
+
+
+
