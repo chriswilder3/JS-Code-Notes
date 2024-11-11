@@ -1,17 +1,35 @@
-<!-- Try to practice How to draw DOM diagram for this page -->
+<!-- Try to practice How to draw DOM diagram for this page
 
-<!-- DOM tree drawn is used to traverse down its branches to reach particular 
-element/attribute/textnode -->
+DOM tree drawn is used to traverse down its branches to reach particular 
+element/attribute/textnode
 
-<!-- Note that document is child of Window object, and HTML is child of document.
+Note that document is child of Window object, and HTML is child of document.
 Hence we can print any DOM object in browser console. 
-Ex : console.log(document), console.log(document.links), etc -->
+Ex : console.log(document), console.log(document.links), etc
 
-<!-- We can also apply selector methods in console, and manipulate the
+We can also apply selector methods in console, and manipulate the
     selected elements there itself.
 Ex : document.getElementById('para') ,
     document.getElementById('para').innerHTML = '<i> This is a note </i>'
-    -->
+   
+
+Further We can also access attributes of elements using the above
+Ex : console.log(document.getElementById('title').id),
+        console.log(document.getElementById('title').className)
+Note : We use className even though attribute is shown as class in HTML
+
+Or we can use getAttribute() which requires attribute names as it is in HTML
+Ex : document.getElementById('title').getAttribute('class')
+
+We can set attribute using setAttribute() which will overwrite the original.
+To append values to the attribute give both seperated by space.
+    Ex : document.getElementById('title').setAttribute('class','main heading')
+
+We can access/change style of the elements using dom. 
+const title = document.getElementById('title')
+title.style.backgroundColor = 'red'
+title.style.padding = '10px'
+title.style.borderRadius ='15px' -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,10 +38,16 @@ Ex : document.getElementById('para') ,
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            background-color: #212121;
+            color:lightcyan;
+        }
+    </style>
 </head>
 <body>
     <div class="content">
-        <h1>
+        <h1 id ="title" class="heading">
             Hello! Welcome to our page.
         </h1>
         <p id="para">
