@@ -3,6 +3,15 @@
 <!-- DOM tree drawn is used to traverse down its branches to reach particular 
 element/attribute/textnode -->
 
+<!-- Note that document is child of Window object, and HTML is child of document.
+Hence we can print any DOM object in browser console. 
+Ex : console.log(document), console.log(document.links), etc -->
+
+<!-- We can also apply selector methods in console, and manipulate the
+    selected elements there itself.
+Ex : document.getElementById('para') ,
+    document.getElementById('para').innerHTML = '<i> This is a note </i>'
+    -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +26,7 @@ element/attribute/textnode -->
         <h1>
             Hello! Welcome to our page.
         </h1>
-        <p>
+        <p id="para">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio velit quidem recusandae dolorem nam adipisci, obcaecati laboriosam repudiandae reprehenderit cumque repellendus ab suscipit. Eveniet ipsam laudantium amet, fuga velit repellat.
         </p>
     </div>
