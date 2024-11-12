@@ -1,0 +1,81 @@
+<!-- In this Model we will create element (say div) purely using Javascript, 
+hence its almost seen as dynamic creation of DOM elements -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:#212121;
+            color : white;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+
+    <script>
+        // Just like createAttribute we have createElement to create
+        // DOM elements, it takes tagName as its param
+        const mydiv = document.createElement('div')
+        console.log(mydiv);
+        // <div> </div>
+
+        // We can add attributes to it directly/ with setAttribute
+        mydiv.className = 'content'
+        mydiv.id ='main'
+        //  <div class="content" id="main"> </div>
+        mydiv.innerHTML = 'Hi brother'
+        mydiv.style.backgroundColor = 'green'
+
+        //Lets give random ID Which is used sometimes but not always
+        mydiv.id = Math.floor( Math.random() *10 +1)
+        // <div class="content" id="3"> </div>
+
+        // We can use setAttribute for setting predefined and custom
+        // properties both.
+        mydiv.setAttribute('title','beautiful div')
+
+        // Note that even though the mydiv will print in console now
+        // It wont be rendered in browser. The dynamically created elements
+        // will be in memory, they need to be attached to document to render
+        
+        // Also note that setAttribute like methods are better than directly setting them
+        // since unlike others which bring elements into DOM document and then
+        // overwrite property vals, setAttribute sets the vals in the memory
+        // itself before attaching to DOM. 
+
+        // For ex: we can enter/append text for the element by creating the
+        //textNode first and then attaching this node to element as child
+        const randomText = document.createTextNode('I am new Text')
+        mydiv.appendChild(randomText)
+
+        // <div class="content" id="1" title="beautiful div" style="background-color: green;">
+        //    Hi brotherI am new Text </div>
+
+        // Just like attaching the textnode above, we can now attach the
+        // created element (mydiv) to document. More specifically to an element 
+        // inside document.
+
+        document.body.appendChild(mydiv);
+        // Now all the effects are shown in the browser
+
+        // <body> <script> tag ...etc 
+        //      <div class="content" id="3" title="beautiful div" style="background-color: green;">
+        //           Hi brotherI am new Text
+        //      </div>
+        // </body>
+
+        // We can put this whole element creation into a function
+        // that acts as component creation code
+
+
+
+    </script>
+
+</html>
