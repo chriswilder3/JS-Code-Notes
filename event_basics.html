@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #414141;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2> Amzing Image</h2>
+    <div>
+        <ul id="images">
+            <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+            <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="" ></li>
+            <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><a style="background-color: aliceblue;padding:4px;"href="https://google.com" id="google">Google</a></li>
+        </ul>
+    </div>
+</body>
+<script>
+    // Usually JS is mostly, sequentially runs. But in some cases
+    // The execution goes out of sequence to execute some other code
+
+    // Events are also one such exceptions. As know already, They are
+    // triggered by events ex: mouse click, mouse move, drag,form submit etc
+
+    // We can add event listeners/ triggers directly onto tags
+    // Ex : We can apply onclick = " alert('Owww')" to say owl
+
+    // But this approach is never recommended and is outdated
+    // Instead we should obtain DOM elements in Javascript
+    // then apply onclick on them 
+    const owl = document.getElementById('owl')
+    owl.onclick =  function(){
+        alert(' Not Owwing')
+    }
+    // But even this onclick also has issues.
+    // Hence best method is to add Event Listeners
+    owl.addEventListener('click', function(e){
+        console.log(e); // PointerEvent
+        alert('Owwing') // alert is generated
+    })
+
+    // If we keep both above event triggers it triggers them both
+    // sequentially : Not Owwing followed by Owwing
+
+    // In addition to these there were other ways of adding events also
+    // attachEvent -Internet Explorer (outdated)
+    // Jquery - .on() . But these are rarely used.
+
+    // The addEventListeners are used for drag,mouse click, keyboard etc
+    // It actully has 3 parameters, but third one is false 
+    // by default, hence not necessary to specify
+    // Hence here is full listener
+    document.getElementById('river').addEventListener(
+            'click',
+            function(){ alert('Hi')},
+             false )
+
+    // NOTE that, Event listeners also give ability of PROPOGATION
+    // in addition to click trigger
+
+
+</script>
+</html>
