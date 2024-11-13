@@ -66,5 +66,16 @@
 
     console.log(myDate.toLocaleString('default',{
         timeZoneName:"long"
-    })); // weekday means english format
+    })); // weekday means english format 
+
+    // We can obtain time only using toTimeString() 
+    console.log(date.toTimeString())     
+                // 16:42:10 GST (Indian Standard Time)
+
+    // There is even another method toLocaleTimeString(), which gives time
+    // according to system but with no additional infon
+    console.log(date.toLocaleTimeString);
+        // // 4:54:14 PM
+    // Hence its human readable along with AM/PM
+    
 
