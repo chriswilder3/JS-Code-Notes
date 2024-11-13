@@ -1,3 +1,12 @@
+ <!-- Here are important things we need to know about events
+     types, timestamp, defaultPrevented, target, toElement
+     , srcElement( very imp.), currentTarget
+     Interview asked : clientX, clientY, screenX, screenY,
+     and other position related things
+
+     Imp Keyboard Events :
+     altKey, shiftKey, keyCode, ctrlKey -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +18,13 @@
         body{
             background-color: #414141;
             color: white;
+        }
+        #outer{
+            display: flex;
+            justify-content: center;
+            width: 180px;
+            position: relative;
+            left: 50%;
         }
     </style>
 </head>
@@ -23,6 +39,12 @@
             <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
             <li><a style="background-color: aliceblue;padding:4px;"href="https://google.com" id="google">Google</a></li>
         </ul>
+    </div>
+
+    <div id="outer" style="background-color: blueviolet;padding:8px">
+        <div id="inner" style="background-color: rgb(217, 93, 40);padding:8px">
+            <button id="river">Click Me</button>
+        </div>
     </div>
 </body>
 <script>
@@ -56,8 +78,34 @@
     // attachEvent -Internet Explorer (outdated)
     // Jquery - .on() . But these are rarely used.
 
+    // The PointerEvent (e passed to callback) is an event object.
+    // Note that the callback function passed to event listener is 
+    // also called event handler.
+
+    // So Event listener takes in the event handler function, which takes 
+    //  the event object, when event( the first argument) is triggered 
+    // event listener executes its corresponding event handler.
+    // The event object holds properties that provide information 
+    // about the event occured, which is used by event handler while
+    // performing its work.
+
+    // This event object contains 2 types of event info:
+    // Browser events, environment events. 
+    // For ex:  it contains timestamp of click happened, width and height
+    // of window and x-y position when event was triggered, the target 
+    // element of event etc
+
     // The addEventListeners are used for drag,mouse click, keyboard etc
-    // It actully has 3 parameters, but third one is false 
+    // Here are important things we need to know about events
+    // types, timestamp, defaultPrevented, target, toElement
+    // , srcElement( very imp.), currentTarget
+    // Interview asked : clientX, clientY, screenX, screenY,
+    // and other position related things
+
+    // Imp Keyboard Events :
+    // altKey, shiftKey, keyCode, ctrlKey
+
+    // AddEventListener actully has 3 parameters, but third one is false 
     // by default, hence not necessary to specify
     // Hence here is full listener
     document.getElementById('river').addEventListener(
@@ -65,8 +113,259 @@
             function(){ alert('Hi')},
              false )
 
-    // NOTE that, Event listeners also give ability of PROPOGATION
-    // in addition to click trigger
+    // Here is general Syntax:
+    // element.addEventListener(eventType, listenerFunction, useCapture);
+
+    // The third arg, useCapture indicated whether the event should be
+    // captured during :
+    // capture phase (true)
+    // bubble phase (false) (default)
+
+    // This is all related to Event Propogation. 
+    // Hence, Event listeners also give ability of PROPOGATION
+    // in addition to click trigger.
+// --------------------------------------
+    // What is Propogation and phases?
+    // Propogation refers to how events travel through the DOM tree.
+    // If the events bubble up from the element to the root, this is
+    // called bubble phase(false). Its default behavior, and sufficient.
+
+    // But for some complex UI, events need to travel from root down to
+    // the element. This is called capture phase (true). Here we are allowing
+    // listeners higher in DOM tree to respond before event reaches target
+
+//--------------------------------------
+    // For EX:  look at two divs : outer and inner, inner is inside outer
+    // First lets add event listener with both set to bubble phase (false)
+
+    // document.querySelector("#outer").addEventListener('click',
+    // function(){
+    //     console.log('OUTER')
+    // })
+    // document.querySelector("#inner").addEventListener('click',
+    // function(){
+    //     console.log('INNER')
+    // })
+
+    // Clicking on Outer but outside the inner gives this
+    // Op: 
+    //      OUTER
+
+    // Clicking inside inner itself gives this
+    // Op : INNER
+    //      OUTER
+   
+
+    // Now lets set both listener to capture phase
+
+    // document.querySelector("#outer").addEventListener('click',
+    // function(){
+    //     console.log('OUTER')
+    // }, true)
+    // document.querySelector("#inner").addEventListener('click',
+    // function(){
+    //     console.log('INNER')
+    // }, true)
+
+    // Clicking on OUTER but outside inner gives this
+    // Op: 
+    //      OUTER
+
+    // But clicking inside the inner itself
+    // op:
+    //      OUTER
+    //      INNER
+
+    // Hence When capture phase is set, the elements higher in DOM tree
+    // will respond first to the event even when we click inside the
+    // the inner element. and reverse happens for bubble phase.
+//-----------------------
+
+    // We saw that, when we click inside the inner, both OUTER and INNER
+    // events are triggered, regardless which is being served first 
+    // using useCapture argument
+
+    // Further What if want the outer to be not at all triggered 
+    // When we click inside the INNER?
+    // It means we are blocking/ stopping the propogation of events
+
+    // For this we can use event object method called e.stopPropgation()
+    // Which we can set inside the event handler of the element
+    // from which we want to stop propogation
+
+    // For ex: When using bubble phase, we know, event propogated(bubbled)
+    // from bottom to root. Hence include stopPropogation inside inner
+
+    // document.querySelector("#outer").addEventListener('click',
+    // function(){
+    //     console.log('OUTER')
+    // })
+    // document.querySelector("#inner").addEventListener('click',
+    // function(e){
+    //     e.stopPropagation()
+    //     console.log('INNER')
+    // })
+    // Op:
+    //      INNER
+    // Hence outer event not triggered at all
+
+    // Lets try the same for OUTER when using capture phase
+    document.querySelector("#outer").addEventListener('click',
+    function(e){
+        e.stopPropagation()
+        console.log('OUTER')
+    }, true)
+    document.querySelector("#inner").addEventListener('click',
+    function(){
+        console.log('INNER')
+    }, true)
+    // Op:
+    //      OUTER
+
+    // So only OUTER was triggered, and propogation to inner during
+    // caputure phase was blocked
+
+    // Hence stopPropgation() stops propogation regardless whether its
+    // inner's event or outer's event as long as its used correctly
+
+// ---------------------------------
+    // We can stop the default behaviour of DOM elements using 
+    // e.preventDefault(), Ex : we might want the anchor tag 
+    // to go to target website when clicked on it
+    // Or we want to stop a form from submitting to backend as seen earlier
+
+    // Lets try this for last item google link
+
+    // document.getElementById('google').addEventListener( 'click',
+    //     function(e){
+    //         e.preventDefault();
+    //     })
+
+    // It works
+
+    // We can check whether default behaviour of element has prevented
+    // or not using boolean e.defaultPrevented 
+
+    document.getElementById('google').addEventListener( 'click',
+        function(e){
+            e.preventDefault();
+            if(e.defaultPrevented){
+                console.log('YES PREVENTED');
+            }else{
+                console.log("SADLY NO");
+            }
+        })
+        // YES PREVENTED
+
+//-----------------------------------
+    
+    // Lets create a small project :
+    // We want the each image to disapear as soon as they are clicked upon
+    // without affecting others.
+
+    // Note that we want entire li item to dispappear not just image
+    // For this we can use e.target
+
+    // The e.target is the element which triggered the event, it
+    // need not be same as the one to which event listener is attached
+    // Ex: Below we are going add event listener to entire div images
+    // But we are going click on different images and watch what happens
+    // to e.target
+
+
+    // const images = document.getElementById('images')
+    // images.addEventListener( 'click', function( e ){
+    //     console.log(e.target);
+    // })
+
+    // <img width="200px" id="photoshop" ... >
+    // <img width="200px" id="japan" ... >
+    // <img width="200px" id="prayer" ... >
+    // Hence e.target points to element on which we clicked
+
+    // But Note that we want to make entire li item disapear, 
+    // As we know we can access parent of element in DOM tree using
+    // .parentNode
+
+    // const images = document.getElementById('images')
+    // images.addEventListener( 'click', function( e ){
+    //     console.log(e.target, e.target.parentNode);
+    // })
+    // <img width="200px" id="japan" ... > <li>…</li>
+
+//---------------------------------------------------
+    // Now lets make them disappear
+
+    // const images = document.getElementById('images')
+    // images.addEventListener( 'click', function( e ){
+    //     e.target.parentNode.style.display = 'None';
+    // })
+
+    // It works, I made all elements disappear,
+    // Note that display is DOM CSS property that is access using style
+    // attribute
+
+// -------------------------------------------
+
+    // Now instead of hiding the element we can completely remove it
+    // from DOM using .remove()
+
+    // const images = document.getElementById('images')
+    // images.addEventListener( 'click', function( e ){
+    //     e.target.parentNode.remove();
+    // })
+
+    // It also works
+
+    // We can also remove from dom by moving to another higher level    
+    // (ie, its parent) and removing the child, which is the elemnt in question
+    
+    // const images = document.getElementById('images')
+
+    // images.addEventListener( 'click', function( e ){
+    //     const listItem = e.target.parentNode
+    //     listItem.parentNode.removeChild(listItem);
+    // })
+
+// ----------------------
+    // Note that When we click on not image/link but the list item 
+    // (ie, bulletpoint, area near) entire list is deleted at once. WHY?
+    // This is because, target then becomes li, whose parentNode is ul
+    // Hence we will remove entire ul. We need to prevent this
+
+    // We can apply strict checks, that ensures apply removal
+    // only when target is IMG.
+    // For this we can use a DOM attribute called .tagName
+
+    // For ex : In the console 
+    // const images = document.getElementById('images')
+    // console.log(images.tagName)
+    // Op : UL
+
+    // const owl = document.getElementById('images')
+    // console.log(owl.tagName)
+    // Op: IMG
+
+    // Hence we can use this tagName to verfiy only IMG target leads to removal
+
+    const images = document.getElementById('images')
+
+    images.addEventListener( 'click', function( e ){
+
+        if (e.target.tagName === 'IMG'){
+            const listItem = e.target.parentNode
+            listItem.parentNode.removeChild(listItem);
+        }
+        
+    })
+
+    // It works perfectly
+
+
+
+
+    
+
 
 
 </script>
