@@ -1,0 +1,75 @@
+<!-- This may look same template as the previous async file, But 
+the buttons used and JS script and lessons are different. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Async Timer Events</h1>
+    <button id="btn">
+        Stop timer1
+    </button>
+    <button id="btn2">
+        Stop timer2
+    </button>
+
+    <p>This may look same template as the previous async file, But 
+        the buttons used and JS script and lessons are different</p>
+
+</body>
+<script>
+
+// Lets print timestamp everysecond using setInterval
+ 
+
+    const repeatTimestamp = setInterval( function (){
+        console.log('Sachin, Current Time stamp', Date.now());
+    }, 1000)
+
+    // Sachin, Current Time stamp 1731600211316
+    // Sachin, Current Time stamp 1731600212319
+    // Sachin, Current Time stamp 1731600213327 and so on
+
+    // Lets give a button to clear this
+
+    document.getElementById('btn').addEventListener( 'click',
+        function(){
+            clearInterval(repeatTimestamp);
+            console.log('Stopped!');
+    })
+
+    // Sachin, Current Time stamp 1731601891632
+    // Sachin, Current Time stamp 1731601892638
+    // Sachin, Current Time stamp 1731601893629
+    // Stopped!
+//------------------------------
+// But note that we can also pass third parameter to timer events
+    // This param is used as the given as argument to the callback
+    // funn inside it, which it can use for its work
+
+    let message = ', Hello World! '
+
+    const secondTimer = setInterval( function (message ){
+        console.log('Sachin, Current Time stamp', Date.now(), message);
+    }, 3000, message)
+
+    // Now lets add clearInterval also for it.
+    document.getElementById('btn2').addEventListener('click',
+        function(){
+            clearInterval(secondTimer);
+            console.log(' Stopped 2nd!');
+    })
+
+    // Sachin, Current Time stamp 1731602348827 , Hello World! 
+    // Sachin, Current Time stamp 1731602351832 , Hello World! 
+    // Sachin, Current Time stamp 1731602354838 , Hello World!
+    //  Stopped 2nd!
+
+</script>
+
+</html>
