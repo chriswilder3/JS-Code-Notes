@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Async Timer Events</h1>
+    <button id="btn">
+        Stop timeout
+    </button>
+    <button id="btn2">
+        Stop timeInterval
+    </button>
+
+</body>
+<script>
+    // Note that timer event functions setTimeOut() and setInterval()
+    // are functions that internally then call the corresponding
+    // timer APIs in the browser. 
+    
+    // Infact both these functons are methods of window object
+    // Hence these APIs are not part of core JS
+
+// IMP : Rember its Timeout NOT TimeOut, O is small
+
+    // setTimeout( function(){ // Executes a callback once after given delay
+    //     console.log("10");
+    // }, 1000);
+    // console.log("20");
+    // 20 
+    // after a second : 10 
+
+    
+    // setInterval( function(){ // Executes a callback repeatedly with given interval
+    //     console.log("Hi");
+    //     num++;
+    // }, 2000) // Hi Hi Hi and so on with delay of 2 sec
+
+    // Note that callback function forms closure with its outer environment
+    // hence it remembers it remembers all variables/methods of its 
+    // parent/ancestor functions
+
+    let num = 10
+    // Now lets say we want to use it in callback of timer functions
+    // We dont need to pass as param, since it already forms closure with it
+    // We can use this to print sequences,series etc with set delay/intervals
+    
+    setTimeout( function(){
+        num++;
+        console.log(num);
+    }, 1000)
+    console.log(num);
+    // 10 11
+
+    // This is because, consolelog outiside setTimeOut executed even before
+    // callback was pushed onto callstack, which then incremented and
+    // and printed num
+
+    // We can put callback in variable as funcn expression and pass it to 
+    // timer funn
+
+    const sayHi = function(){
+        console.log("Hi!");
+    }
+    setTimeout(sayHi, 1000); // Just pass the variable not call it with ()
+    // Hi!
+//---------------------------
+
+// Website Asthetics with TIMER functons :
+    // Lets say we want to change DOM elements (say heading), but 
+    // we want this change to happen after 2 seconds of webpage load 
+    // for better webpage ashetic. We can use setTimeout()
+
+    const headingChange = function(){
+        document.querySelector('h1')
+        .innerHTML = '2nd Async Chapter :Timer Events'
+    } 
+    // setTimeout(headingChange, 3000) // It works
+
+// --------------------------------
+
+
+// clearTimeout : 
+
+    // What if we want the timerevent set to not take place?
+    // ie, Can we stop the timerevent from taking place before it happens?
+    // We can use clearTimeout for this.
+
+    // Note that there could be many timeout events or none?
+    // So how does clearTimeout know which one to clear?
+
+    // Hence we need to pass a reference of the settimeout we want to delete
+    // to cleartimeout
+
+    const headChangeTimer = setTimeout(headingChange, 3000)
+
+    // clearTimeout(headChangeTimer);
+
+    // But the problem with above approach is as soon as timer event is 
+    // registered to be sent to taskqueue, the cleartimeout
+    // immediately deletes that event. so event Never occurs
+    // So this is pretty useless
+
+// Better approach is, allow user to cancel the timer interactively
+    // if he wants, before timer reaches. Hence we can use
+    // user prompt like button/input concepts.
+
+    // We already have btn, we can add click event listener with 
+    // cleartimer defined in its callback
+
+    document.getElementById('btn')
+        .addEventListener( 'click', function (){
+            clearTimeout(headChangeTimer);
+        })
+    // It works
+
+//-----------------------------------------
+
+// ClearInterval() :
+
+// clear timeout may seem not that useful, but incase of setInterval()
+    // where code runs continously without pause, clearInterval()
+    // is very important
+    
+    const helloPrinter = setInterval( function (){ 
+        console.log('HELLO')
+    }, 1000)
+
+    document.getElementById('btn2')
+        .addEventListener( 'click', function (){
+            clearInterval(helloPrinter);
+        })
+    // (10) HELLO , clicked and stopped after 10 secs
+    
+
+
+</script>
+</html>
