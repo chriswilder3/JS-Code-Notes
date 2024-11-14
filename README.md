@@ -4,4 +4,4 @@ An ample amount of code I wrote while learning Javascript. Can be used as notes 
 ## Usage
 - Run the code in editor/IDE or in a browser directly
 - The notes are written wherever necessary
-- The results will be mostly shown in console itself except in some cases where innerHTML is used directly.
+- The results will be mostly shown in console itself except in some cases where HTML is also used for demonstration.
