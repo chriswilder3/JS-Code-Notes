@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: #212121;
+        color:aliceblue;
+    }
+    #memo{
+        background-color: lightslategray;
+        padding: 30px;
+        left:50%;
+        margin:10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <h1>
+        Hi Come learn JS API requests.
+    </h1>
+    <h2> This is demo App, that displays Memo card of Github users</h2>
+    <form>
+        <label for="username"> Enter Github Username : </label>
+        <input id="username" name="username" type="text">
+        <button id="btn" type="submit">
+            Get Info
+        </button>
+    </form>
+
+    <div id="memo">
+
+    </div>
+</body>
+<script>
+
+    // Fetch is new API request method
+    // Before fetch, API request used to happen through XMLHttpRequest
+    // which was done through AJAX. Now AJAX is asynchronous javascript
+    // technique used along with XML.
+
+    // XMLHttpRequest is a JS API used to interact with servers. It allows
+    // us to get data from server without refreshing the page. 
+    // IMP : Even though its name involves XML term, it can handle various 
+    // other formats also like JSON, plain text, and HTML.
+
+// Communication in JS happens through HTTP requests and responses.
+    // But the way to communicate them can be broadly categorized into two
+
+    //1. Synchronous communication (Traditional Web Interaction)
+        // Relies on full-page reloads (form submits or page navigations)
+        // HTTP requests are sent directly by browser to the server.
+
+    //2. Asynchronous Communication (Dynamic Web Interaction (AJAX,fetch))
+        // Relies on async requests behind scene( fetch,XMLHttpRequests)
+        // The developer controls when, how, and what data to send/receive
+        // without refreshing the page.
+
+// XMLHttpRequest API basics :
+
+    // Create its object
+    let xhr = new XMLHttpRequest()
+
+    // Open a request to the server
+    xhr.open('GET','https://randomuser.me/api',true)
+        // open takes 3 params
+            // 1. HTTP request method (GET, POST etc)
+            // 2. request url
+            // 3. bool 'async' indicates whether to use async, default:true
+    
+    // Send the request to server
+    xhr.send()
+        // For GET requests, send is usually no params (though we can)
+        // For POST, body containing data (e.g., JSON or form data) is 
+        // sent as param to send, xhr.send([body])
+    
+// Before we handle responses, We need to know about the 5 states
+    // that each xhr will go through. These states are given
+    // by xhr.readyState property
+    console.log(xhr);
+
+    // XMLHttpRequest {onreadystatechange: null, readyState: 1, 
+    // timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
+
+    console.log(xhr.readyState);
+    // Op: 1
+    // xhr objects readystate after we sent the request is 1.
+
+// Lets see all 5 readyStates
+    // 0 (UNSENT):  The object has been created, but open() hasn't 
+                    // been called yet.
+
+    // 1 (OPENED):  open() has been called, but the request hasn't been 
+                // sent yet. You can set request headers at this 
+                // stage using xhr.setRequestHeader().
+
+    // 2 (HEADERS_RECEIVED): send() has been called, and the server's 
+                // response headers are available. At this stage, 
+                // you can use xhr.getResponseHeader() 
+                // or xhr.getAllResponseHeaders().
+
+    // 3 (LOADING): The response body is being received (partial data 
+                // may be available).
+
+    // 4 (DONE): The operation is complete, and the full response 
+                // is available.
+    
+    // Lets create another xhr object and verify its states each stage
+    let xhr2 = new XMLHttpRequest()
+    console.log(xhr2.readyState); // 0
+
+    // Its good practice to store url in variable
+    let requestUrl = 'http://randomuser.me/api'
+
+    xhr2.open('GET',requestUrl, true)
+    console.log(xhr2.readyState); // 1
+
+    xhr2.send()
+    console.log(xhr2.readyState); // 1
+
+// Why readyState is still 1 after send?
+    // When you call send(), the request is initiated asynchronously. 
+    // The JavaScript engine doesn't immediately wait for the server to
+    // respond. Instead, it proceeds with the next line of code.
+
+    // This means:
+    // When send() is executed, the readyState is still 1 because 
+    // the request hasn’t yet reached the next stage (2: HEADERS_RECEIVED).
+    // The readyState will only change to 2, 3, and eventually 4 after
+    // the server starts processing and responding to the request. 
+    // These changes happen in the background and are tracked via the 
+    // onreadystatechange event
+
+// How to Observe readyState Changes Properly?
+    // To observe changes in readyState, you need to attach a listener
+    // to the onreadystatechange event of xhr, which triggers every time the
+    // readyState value changes on xhr object. Its similar to onclick
+
+    // xhr2.onreadystatechange = function (){
+    //     // Rememeber we need to set onreadystatechange to callback
+    //     // like onclick. DONT pass callback as param to it.
+
+    //     // Now we are in the event handler funcn, which means
+    //     // the readystate would have changed by now, 
+    //     console.log(xhr2.readyState);
+
+    //     // We can also get back the server response in this handler
+
+    //     if (xhr2.readyState === 4 && xhr2.status === 200) {
+    //         // if the request is OK and Response is available
+    //         console.log('Response:', xhr2.responseText); 
+            
+    //     }
+    // }
+    
+    // Op: 1
+    //     2
+    //     3
+    //     4
+    //     Response: {"results":[{"gender":"male","name":{"title":"Mr"...}]}
+    
+    // Note that event listener printed all readystate, since every time
+    // state is changed, its handler will be run. but response will be
+    // print when readystate is 4 and response is avaialbe
+
+// Getting response :
+    // We can also use 'this' keyword for getting responseText instead of
+    // xhr2.responseText. So this.responseText also works.
+
+    // Note that the response we get mostly comes in the form of string
+    // Hence we cant directly apply object access/methods on it
+    console.log('----------------');
+    let xhr3 = new XMLHttpRequest()
+    requestUrl = 'http://api.github.com/users/chriswilder3'
+    xhr3.open('GET',requestUrl)
+    xhr3.send()
+
+    // xhr3.onreadystatechange = function(){
+    //     console.log(this.readyState); // 2 3 4
+
+    //     if(this.readyState == 4){
+    //         console.log(this.responseText);
+    //         // {"login": "chriswilder3",
+    //         // "id": 51295538,
+    //         // "name": "Sachin Sekiro",
+    //         // "company": null,
+    //         // "bio": "Sachin Doddamani, I am ...",
+    //         // "public_repos": 38,
+    //         // "public_gists": 0,
+    //         // "followers": 0,
+    //         // "following": 0,
+    //         // "created_at": "2019-06-02T16:26:31Z",
+    //         // "updated_at": "2024-10-29T12:47:17Z"
+    //         // }
+    //     // To access say individual data, its better
+    //     // to store resonse as variable
+    //     const data = this.responseText;
+
+    //     console.log(data["followers"]);
+    //         // undefined
+    //     // This happens since the response data is given in string form
+
+    //     console.log(typeof data);
+    //         // string
+    //     // Hence we need to convet it JS Object, we use JSON object type's
+    //     // .parse(string_obj) for this.
+
+    //     // As we know, by definition, JSON is similar to JS objects, except
+    //     // property/keys must be strings only.
+    //     // We can convert JS objects to JSON strings with JSON.stringify()
+
+    //     // And as we know most of the data receive through server API can
+    //     // be in the form JSON strings,which can be converted back
+    //     // into JS objects using JSON.parse()
+    //     const dataObj = JSON.parse(data)
+
+    //     console.log(typeof dataObj); // object
+    //     console.log(dataObj['followers']); // 0
+    //     console.log(dataObj['id']); // 51295538
+    //     console.log(dataObj['name']); // Sachin Sekiro
+        
+        
+
+
+    //     }
+    // }
+    
+    // Lets have an assignment, We want to follow the same methods above,
+    // But make a interactive UI :when user enters username and clicks btn
+    // we need to make a user memo card, displaying Name, photo,
+    // followers, following etc
+
+    const form = document.querySelector('form')
+    
+    const memo = document.getElementById('memo')
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const username = document.getElementById('username')
+        console.log(username.value);
+
+        if(username.value === ''){
+                alert('Invalid username try again!')
+            }
+        else{
+            const xhr = new XMLHttpRequest()
+            const requestUrl = `http://api.github.com/users/${username.value}`
+            xhr.open('GET',requestUrl);
+            xhr.onreadystatechange = function()
+                {
+                console.log(xhr.readyState);
+                    
+                if(this.readyState == 4){
+                    if(this.status != 200){
+                        alert(' No such user exists!')
+                    }
+                    else{
+                        memo.innerHTML = ''
+                        const data = JSON.parse(this.responseText)
+                        console.log(data['name']);
+
+                        // Give name in the memo
+                        const name = document.createElement('h2')
+                        name.innerHTML = ` Name : ${data.name}`
+                        name.style.padding = '10px'
+                        memo.appendChild(name)
+
+                        // Attache Avatar img to memo
+                        const img = document.createElement('img')
+                        console.log(data['avatar_url']);
+                        img.src = data['avatar_url']
+                        img.style.width = '200px'
+                        img.style.height ='250px'
+                        memo.appendChild(img)
+
+                        // Enter follower count
+                        const extra = document.createElement('h4')
+                        extra.innerHTML = ` followers : ${data.followers}, <br> location :${data.location}`
+                        extra.padding = '5px'
+        
+                        extra.style.backgroundColor = 'lightblue'
+                        extra.style.color = 'darkblue'
+                        memo.appendChild(extra)
+                    }
+                 } 
+                }
+            xhr.send()
+        }
+   
+    }
+    )
+
+
+</script>
+</html>
