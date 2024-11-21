@@ -174,5 +174,60 @@
     // code reuse
     // ease, simplicity
     // dynamic inheritance
+// ---------------------------------------------
 
-    
+
+// Class methods :
+    // We can add our own methods in the class, We dont
+    // need to specify this.method_name/ function here, just write
+    // methods directly
+
+    class Vehicle{
+        constructor(type, brand){
+            this.type = type
+            this.brand = brand
+        }
+
+        owner(){
+            console.log(' John Seed'); 
+        }
+    }
+
+    const holy_vehicle = new Vehicle('tractor', 'edens gate')
+    // DONT forget new keyword above
+    holy_vehicle.owner()
+
+    // John Seed
+
+// Class inheritance
+    // To create a class inheritance, use the extends keyword.
+    // EX : child extends parent
+    // A class created with a class inheritance inherits all 
+    // the properties/methods from another class:
+
+    // To call the constuctor of its parent/ Get the reference
+    // of its parent, use super()
+
+    class AssualtVehicle extends Vehicle{
+        constructor(type, horsepower, mileage){
+            super(type)
+            this.hp = horsepower
+            this.mil = mileage
+        }
+        attack(){
+            console.log(' Attacking....');
+        }
+    }
+
+    const av1 = new AssualtVehicle('truck',800,20)
+    // DONT forget new keyword above
+    console.log(av1);
+
+    // AssualtVehicle { type: 'truck', brand: undefined, hp: 800, 
+    //               mil: 20 }
+
+    av1.owner()
+    av1.attack()
+    //      John Seed
+    //      Attacking....
+  
